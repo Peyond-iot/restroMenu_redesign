@@ -9,6 +9,48 @@
       name="description"
       content="Web site created using create-react-app"
     />
+
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+      @layer base {
+        :root {
+          --color-clifford: #da373d; /* Define Clifford Red */
+          --container-padding: 1.5rem;
+          --container-lg: 1296px;
+          --container-md: 768px;
+          --container-xl: 1440px;
+          --container-2xl: 1600px;
+          --shadow-red: 0 2px 5px rgba(239, 68, 68, 0.2); /* Custom red shadow */
+        }
+      }
+    
+      @layer components {
+        .container {
+          max-width: var(--container-lg);
+          padding: var(--container-padding);
+          margin: 0 auto;
+        }
+        @screen md {
+          .container {
+            max-width: var(--container-md);
+          }
+        }
+        @screen xl {
+          .container {
+            max-width: var(--container-xl);
+          }
+        }
+        @screen 2xl {
+          .container {
+            max-width: var(--container-2xl);
+          }
+        }
+        .shadow-red {
+          box-shadow: var(--shadow-red);
+        }
+      }
+    </style> 
+    
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
