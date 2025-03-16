@@ -15,14 +15,18 @@ const AddOrder: React.FC<AddOrderListProps> = ({ menu_category }) => {
     const openModal = (menu: any) => {
         setSelectedItem(menu);
         setInstruction("")
+        setLevel("Low")
         const sessionKey = "menu-basket";
   
         // Get existing items from session storage
         const existingItems = sessionStorage.getItem(sessionKey);
+        const existingTable: any = sessionStorage.getItem('table');
+
+        const table = JSON.parse(existingTable);
         let menuBasket = existingItems ? JSON.parse(existingItems) : [];
     
         // Check if the item already exists
-        const existingItemIndex = menuBasket.findIndex((item: any) => item._id === menu._id);
+        const existingItemIndex = menuBasket.findIndex((item: any) => (item._id === menu._id && item.tableId === table?._id));
     
         if (existingItemIndex !== -1) {
             setSelectedItem((prevItem: any)=>({
@@ -51,14 +55,14 @@ const AddOrder: React.FC<AddOrderListProps> = ({ menu_category }) => {
         let menuBasket = existingItems ? JSON.parse(existingItems) : [];
     
         // Check if the item already exists
-        const existingItemIndex = menuBasket.findIndex((item: any) => item._id === menu._id);
+        const existingItemIndex = menuBasket.findIndex((item: any) => (item._id === menu._id && item.tableId === table?._id));
     
         if (existingItemIndex !== -1) {
             menuBasket[existingItemIndex].quantity = menu?.quantity;
             menuBasket[existingItemIndex].spicy_level = spicy_level;
             menuBasket[existingItemIndex].notes = inst;
         } else {
-            menuBasket.push({ ...menu, tableNumber: table?.tableNumber, tableId: table?._id, spicy_level: spicy_level, notes: inst});
+            menuBasket.push({ ...menu, quantity: menu.quantity? menu.quantity : 1, tableNumber: table?.tableNumber, tableId: table?._id, spicy_level: spicy_level, notes: inst});
         }
     
         sessionStorage.setItem(sessionKey, JSON.stringify(menuBasket));

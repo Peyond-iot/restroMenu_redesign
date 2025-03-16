@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 type ModalProps = {
     isOpen: boolean;
     onClose: ()=> void;
@@ -11,6 +13,15 @@ type ModalProps = {
   };
   const Modal: React.FC<ModalProps> = ({ isOpen, onClose, item, updateQuantity, addItem, setLevel, spicy_level, setInstruction, inst }) => {
     if (!isOpen) return null;
+
+    const getTable = () => {
+      const getTable = sessionStorage.getItem('table');
+      if(getTable){
+        return true
+      }else{
+        return false;
+      }
+    }
   
     return (
       <div className="fixed inset-0 flex items-center justify-center backdrop-blur bg-opacity-40 z-50">
@@ -88,8 +99,10 @@ type ModalProps = {
   
           {/* Add Item Button */}
           <button
-            onClick={() => addItem(item)}
-            className="w-full mt-4 py-2 bg-red-500 text-white rounded-lg font-bold"
+            onClick={() => getTable()? addItem(item) : ''}
+            className={`w-full mt-4 py-2 rounded-lg font-bold ${
+              getTable()? "bg-red-500 text-white cursor-pointer" : "bg-gray-300 text-gray-600 cursor-not-allowed"
+            }`}
           >
             Add Item
           </button>
